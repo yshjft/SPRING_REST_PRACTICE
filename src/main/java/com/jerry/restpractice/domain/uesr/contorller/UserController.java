@@ -5,12 +5,16 @@ import com.jerry.restpractice.domain.uesr.dto.UsersDto;
 import com.jerry.restpractice.domain.uesr.service.UserService;
 import com.jerry.restpractice.global.common.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,12 +24,16 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<ResponseDto> getUser(@PathVariable Long userId) {
-        UserDto userDto= userService.getUser(userId);
+        UserDto userDto = userService.getUser(userId);
+
+        EntityModel entityModel = EntityModel.of(userDto);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getUsers());
+        entityModel.add(linkTo.withRel("all-users"));
 
         ResponseDto responseDto = ResponseDto.builder()
                 .status(HttpStatus.OK.value())
                 .message("get user")
-                .result(userDto)
+                .result(entityModel)
                 .build();
 
         return ResponseEntity
@@ -34,12 +42,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDto> getUser() {
+    public ResponseEntity<ResponseDto> getUsers() {
         UsersDto usersDto = userService.getUsers();
 
         ResponseDto responseDto = ResponseDto.builder()
                 .status(HttpStatus.OK.value())
-                .message("get user")
+                .message("get entire users")
                 .result(usersDto)
                 .build();
 
