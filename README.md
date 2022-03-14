@@ -45,3 +45,6 @@ ResponseDto responseDto = ResponseDto.builder()
     }
 }
 ```
+
+## HAL  
+???
