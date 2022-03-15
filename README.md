@@ -46,5 +46,7 @@ ResponseDto responseDto = ResponseDto.builder()
 }
 ```
 
+## ACTUATOR
+- 버전 충돌로 인해 현재 작동하지 않고 있다
+
 ## HAL  
-???
