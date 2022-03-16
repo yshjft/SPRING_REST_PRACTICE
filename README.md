@@ -46,7 +46,5 @@ ResponseDto responseDto = ResponseDto.builder()
 }
 ```
 
-## ACTUATOR
-- 버전 충돌로 인해 현재 작동하지 않고 있다
-
-## HAL  
+## ACTUATOR & HAL BROWSER
+- 버전 충돌로 인해 현재 작동하지 않고 있다 → 문제 해결 방법을 모르겠다. 후에 다시 도전해보도록 하겠다.
