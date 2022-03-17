@@ -6,6 +6,7 @@ import com.jerry.restpractice.domain.uesr.dto.UsersResponseDto;
 import com.jerry.restpractice.domain.uesr.service.UserService;
 import com.jerry.restpractice.global.common.response.ResponseDto;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -26,27 +27,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{userId}")
-    @ApiOperation(value="사용자 정보 상세 조회", notes = "userId에 해당되는 사용자 정보를 상세 조회합니다.")
-    public ResponseEntity<ResponseDto> getUser(@PathVariable Long userId) {
-        UserDto userDto = userService.getUser(userId);
-
-        // HATEOAS
-        EntityModel entityModel = EntityModel.of(userDto);
-        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getUsers());
-        entityModel.add(linkTo.withRel("get all users"));
-
-        ResponseDto responseDto = ResponseDto.builder()
-                .status(HttpStatus.OK.value())
-                .message("get user")
-                .result(entityModel)
-                .build();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(responseDto);
-    }
-
     @GetMapping
     @ApiOperation(value="사용자 목록 조회", notes = "전체 사용자를 조회합니다.")
     public ResponseEntity<ResponseDto> getUsers() {
@@ -65,6 +45,28 @@ public class UserController {
                 .status(HttpStatus.OK.value())
                 .message("get all users")
                 .result(usersResponseDto)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDto);
+    }
+
+
+    @GetMapping("/{userId}")
+    @ApiOperation(value="사용자 정보 상세 조회", notes = "userId에 해당되는 사용자 정보를 상세 조회합니다.")
+    public ResponseEntity<ResponseDto> getUser(@PathVariable Long userId) {
+        UserDto userDto = userService.getUser(userId);
+
+        // HATEOAS
+        EntityModel entityModel = EntityModel.of(userDto);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getUsers());
+        entityModel.add(linkTo.withRel("get all users"));
+
+        ResponseDto responseDto = ResponseDto.builder()
+                .status(HttpStatus.OK.value())
+                .message("get user")
+                .result(entityModel)
                 .build();
 
         return ResponseEntity
