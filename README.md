@@ -48,3 +48,6 @@ ResponseDto responseDto = ResponseDto.builder()
 
 ## ACTUATOR & HAL BROWSER
 - 버전 충돌로 인해 현재 작동하지 않고 있다 → 문제 해결 방법을 모르겠다. 후에 다시 도전해보도록 하겠다.
+
+## 보류   
+데브코스를 듣는 동안에는 데브코스의 과정에 집중하기 위해 이 프로젝트의 진행을 보류합니다.
